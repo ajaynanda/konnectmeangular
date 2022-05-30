@@ -1,0 +1,11 @@
+.heading{
+    display: block;
+    margin:5px;
+    text-align: center;
+    color: darkblue;
+    background-color: azure;
+    padding: 30px;
+}
+.container{
+    margin-top: 10px;
+}

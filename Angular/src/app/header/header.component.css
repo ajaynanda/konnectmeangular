@@ -1,0 +1,28 @@
+nav{
+    display: flex;
+}
+li{
+    padding: 5px;
+}
+a{
+    padding: 25px;
+    margin: 15px 15px;
+    text-decoration: none;
+    color:darkred;
+    font-size: large;
+    font-weight: bold;
+}
+.menubar{
+  margin-left: auto;
+  margin-right: 45px;
+}
+.navbar-brand{
+    font-size: 35px;
+    color:darkred;
+}
+.navbar-brand:hover{  
+    color:darkblue;
+}
+a:hover{
+    color:darkblue;
+}

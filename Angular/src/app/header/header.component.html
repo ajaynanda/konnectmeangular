@@ -1,0 +1,38 @@
+<nav *ngIf="homeheader"  class="navbar navbar-expand-md bg-light navbar-light">
+    <div class="navbar-header">
+        <a routerLink="" class="navbar-brand">KonnectMe</a>
+    </div> 
+    <div class="menubar ">
+    <ul class="nav navbar-nav" id="btncollapse">
+        <li><a routerLink="">Premium Membership</a></li>
+        <li><a routerLink="">Privacy Policy</a></li>
+        <li><a routerLink="">Terms and Conditions</a> </li>
+        <li><a routerLink="">Login</a></li>
+        <li><a routerLink="">Register</a></li>
+    </ul>
+</div>
+</nav>
+<nav *ngIf="userheader"  class="navbar navbar-expand-md bg-light navbar-light">
+    <div class="navbar-header">
+        <a routerLink="" class="navbar-brand">KonnectMe</a>
+    </div>
+    <div class="menubar">
+    <ul class="nav navbar-nav">
+        <li><a title="Add new Friends" routerLink="">Konnect</a></li>
+        <li><a routerLink="">My Profile</a> </li>
+        <li><a routerLink="">Logout</a></li>
+    </ul>
+</div>
+</nav>
+<nav *ngIf="adminheader"  class="navbar navbar-expand-md bg-light navbar-light">
+    <div class="navbar-header">
+        <a routerLink="" class="navbar-brand">KonnectMe</a>
+    </div>
+    <div class="menubar">
+    <ul class="nav navbar-nav">
+        <li><a title="Add new Friends" routerLink="">Konnect</a></li>
+        <li><a routerLink="">My Profile</a> </li>
+        <li><a routerLink="">Logout</a></li>
+    </ul>
+</div>
+</nav>
