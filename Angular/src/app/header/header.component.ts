@@ -9,9 +9,16 @@ export class HeaderComponent implements OnInit {
 homeheader:Boolean=true
 userheader:Boolean=false
 adminheader:Boolean=false
-  constructor() { }
+  constructor() {
+    const token = localStorage.getItem('KMtoken')
+    if(token){
+      this.userheader=true
+      this.homeheader=false
+      
+    }
+   }
 
   ngOnInit(): void {
+    
   }
-
 }

@@ -15,6 +15,7 @@ const Alluser = ((req,res) => {
     })
 })
 const userRegister = ((req, res) => {
+    console.log(req.body);
     return new Promise((resolve, reject) => {
         Userdb.findOne({ Email: req.body.email }).then(async (user) => {
             if (user) {
@@ -34,7 +35,7 @@ const userRegister = ((req, res) => {
                         userid: id
                     })
                     await Userdb.findByIdAndUpdate(id, userid).then((data) => {
-                        console.log(data);
+                    
                         resolve(result)
                     })
                 }).catch(err => {
@@ -45,15 +46,16 @@ const userRegister = ((req, res) => {
     })
 })
 const userLogin=((req, res) => {
+    console.log(req.body);
     return new Promise((resolve, reject) => {
-
+        
         Userdb.findOne({ Email: req.body.email }).then((user) => {
+           
             if (!user) {
                 return reject({ Error: true, Message: "Email incorrect" })
             }
             if (user) {
                 const password = user.Password
-                console.log(user);
                 bcrypt.compare(req.body.password, password).then((users) => {
                     console.log(users);
                     if (!users) {
@@ -72,7 +74,6 @@ const userLogin=((req, res) => {
                             httpOnly: true,
                             sameSite: 'lax'
                         })
-                        console.log(user);
                         req.token = token
                         return resolve(user)
                     }

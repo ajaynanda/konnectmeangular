@@ -1,14 +1,14 @@
 <nav *ngIf="homeheader"  class="navbar navbar-expand-md bg-light navbar-light">
     <div class="navbar-header">
-        <a routerLink="" class="navbar-brand">KonnectMe</a>
+        <a routerLink="/home" class="navbar-brand">KonnectMe</a>
     </div> 
     <div class="menubar ">
     <ul class="nav navbar-nav" id="btncollapse">
-        <li><a routerLink="">Premium Membership</a></li>
-        <li><a routerLink="">Privacy Policy</a></li>
-        <li><a routerLink="">Terms and Conditions</a> </li>
-        <li><a routerLink="">Login</a></li>
-        <li><a routerLink="">Register</a></li>
+        <li><a routerLink="/membership">Premium Membership</a></li>
+        <li><a routerLink="/policy">Privacy Policy</a></li>
+        <li><a routerLink="/terms">Terms and Conditions</a> </li>
+        <li><a routerLink="/login">Login</a></li>
+        <li><a routerLink="/register">Register</a></li>
     </ul>
 </div>
 </nav>
@@ -36,3 +36,4 @@
     </ul>
 </div>
 </nav>
+<router-outlet></router-outlet>

@@ -18,7 +18,7 @@ router.post('/userregister',((req,res)=>{
         res.status(400).json(err)
     })
 }))
-router.get('/userlogin',((req,res)=>{
+router.post('/userlogin',((req,res)=>{
     Controller.userLogin(req,res).then((result)=>{
         res.status(200).json({
             Success:true,
