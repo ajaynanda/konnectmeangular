@@ -1,28 +1,40 @@
 .sidebar{
     background-color: aliceblue;
     height: 100vh;
+    width: 100%;
     border-radius: 10px;
 }
 .sidebartop{
     height:100%;
-    margin: 20px;
-  
-}
-.user{
     margin: 10px auto;
 }
+.user{
+    margin: 30px auto;
+}
+.user img{
+    border: 5px solid white;
+    border-radius: 50%;
+}
 .menubar{
-    margin: 10px;
+    text-align:left;
+    margin-left: 60px;
 }
 li{
     list-style: none;
-    margin: 10px;
+    margin-left:0px;
+    margin-right: 0px;
+    margin-top: 30px;
+}
+i{
+    margin: auto 10px;
+    
 }
 a{
     text-decoration: none;
     padding: 5px;
     margin: 10px;
     color: darkred;
+    font-size: 20px;
 }
 a:hover{
     color: blue;

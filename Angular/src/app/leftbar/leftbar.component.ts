@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeftbarComponent implements OnInit {
   constructor() { }
-
+profile=false
   ngOnInit(): void {
   }
 

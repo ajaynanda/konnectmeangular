@@ -6,8 +6,6 @@ import { SharebarComponent } from '../sharebar/sharebar.component';
 import { PostbarComponent } from '../postbar/postbar.component';
 import { LeftbarComponent } from '../leftbar/leftbar.component';
 import { RightbarComponent } from '../rightbar/rightbar.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button'
 @NgModule({
   declarations: [
     UserComponent,
@@ -19,9 +17,6 @@ import {MatButtonModule} from '@angular/material/button'
   imports: [
     CommonModule,
     UserRoutingModule,
-   MatButtonModule,
-   MatIconModule
-  
   ]
 })
 export class UserModule { }

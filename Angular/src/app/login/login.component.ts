@@ -25,7 +25,7 @@ authenticated=false
         this.route.navigate(['/user/dashboard'])    
         setTimeout(()=>{
           window.location.reload()
-        },100)
+        },500)
       }
     },(err=>{
       console.log(err);
