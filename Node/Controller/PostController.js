@@ -5,7 +5,9 @@ const Userdb = require('../Model/user')
 const userpost=((req,res)=>{      
     return new Promise((resolve,reject)=>{
                 Userdb.findOne({userid:req.params.id}).then((userdata)=>{
-                    console.log(userdata);
+                    // console.log(userdata);
+                    console.log(req.body,"iuh");
+                    
                     upload(req, res, (err) => {
                         if (err) reject(err)
                         if (!req.files.img && !req.body.desc) {

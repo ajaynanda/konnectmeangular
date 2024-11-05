@@ -11,6 +11,8 @@ export class RightbarsComponent implements OnInit {
 @Input() userdata:any
   frnd: any=[];
   followList:any=[]
+  moreFollowing: boolean=false;
+  moreFriend: boolean=false;
 
   constructor(private userService:UserService) { }
 
@@ -25,5 +27,20 @@ export class RightbarsComponent implements OnInit {
       this.frnd=res.data?.Friends
       this.followList=res.data?.Followings
      })
+  }
+  moreFollowings(){
+    this.moreFollowing=!this.moreFollowing
+  }
+  moreFriends(){
+    this.moreFriend=!this.moreFriend
+  }
+  userUnfollow(id:number){
+    this.userService.userUnfollow(this.userdata._id,id).subscribe((res:any)=>{
+    },(err=>{
+    console.log(err,"err")}))
+  }
+  removeFriends(data:any){
+    console.log(data);
+    
   }
 }

@@ -1,6 +1,6 @@
 .container {
     max-width: 1320px;
-    height: 50%;
+    height: auto;
 }
 .sidenav{
     background-color: #263238;

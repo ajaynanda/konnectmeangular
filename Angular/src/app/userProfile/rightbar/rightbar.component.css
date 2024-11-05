@@ -2,12 +2,19 @@
   overflow:hidden
 }
 .rightbarTitle{
+    display: flex;
     font-size: 18px;
     font-weight: 800;
     margin-bottom: 10px;
     color: rgb(13, 13, 154);
   }
-  
+  .rightbarTitle span{
+    margin-left: auto;
+    color: black;
+    font-weight: 100;
+    font-size: medium;
+    cursor: pointer;
+  }
   .rightbarInfo{
     margin-bottom: 30px;
   }
@@ -44,7 +51,40 @@
     margin-bottom: 20px;
     cursor: pointer;
   }
-  .rightbarFollowing:hover{
+  .not_rightbarFollowing{
+    display: flex;
+    width: 100%;
+}  
+.friends_circle{
+  display: block;
+  height: auto;
+  max-height: 400px;
+  overflow: auto;
+}
+.friends_circle a{
+  display: flex;
+  align-items: center;
+  color: black;
+  text-decoration: none;
+}
+.friends_circle button{
+  padding: 2px;
+  margin-left: auto;
+  font-size: small;
+}
+.span_cir{
+  display: flex;
+  align-items: end;
+  margin-bottom: 30px;
+  width: 90%;
+}
+.span_cir span{
+  margin-left: 10px;
+
+  display: flex;
+  align-items: center;
+}
+.rightbarFollowing:hover{
     transform: rotate(360deg);
   }
   .rightbarFollowing a{
@@ -66,9 +106,16 @@
     border-radius:50%;
   }
   .peopleFollow{
-   
+   display: flex;
     font-size: 18px;
     /* font-weight: 800px; */
     margin-bottom: 10px;
     color: rgb(13, 13, 154);
+  }
+  .peopleFollow span{
+    margin-left: auto;
+    color: black;
+    font-weight: 100;
+    font-size: medium;
+    cursor: pointer;
   }

@@ -38,4 +38,5 @@ userUnfollow(userid:number,id:number){
 removeFollower(userid:number,follwerid:number){
   return this.http.delete(`${environment.removeFollower}/${userid}/${follwerid}`)
 }
+
 }

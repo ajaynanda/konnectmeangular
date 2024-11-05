@@ -70,6 +70,17 @@ const UserSchema=new mongoose.Schema({
         _id:String,
         profilePic:String,
         text:String
+    }],
+    chatList:[{
+        Name:String,
+        _id:String,
+        profilePic:String,
+        lasttext:String,
+        isSeen:Boolean,
+        chatID:String,
+        repID:String,
+        repName:String,
+        repProfilePic:String
     }]
 },{timestamps:true})
 const Userdb=mongoose.model('user',UserSchema)

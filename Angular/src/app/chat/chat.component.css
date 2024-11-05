@@ -135,4 +135,19 @@
     margin-left: auto;
     background-color: #a9bbcf;
   }
+  .modal_newchat{
+    padding: 10px;
+  }
+  .modal_newchat button{
+    padding: 3px;
+    font-size: medium;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+  }
+  .modal_newchat h2{
+    font-size: larger;
+    font-family: 'Poppins';
+  }
+
   

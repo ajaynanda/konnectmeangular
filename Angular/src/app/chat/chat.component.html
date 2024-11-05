@@ -18,16 +18,20 @@
         <button (click)="startNewChat()">New Chat</button>
       </div>
       <div *ngFor="let user of users" class="user-item" (click)="selectUser(user)">
-        <img [src]="user.profileImage" alt="Profile Image" class="profile-image" />
-        <span>{{ user.name }}</span>
+        
+        <img *ngIf="user.repProfilePic!=null" src="{{user.repProfilePic}}" alt="Profile Image" class="profile-image">
+        <img *ngIf="user.repProfilePic==null"
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            alt="no image" class="profile-image">
+        <span>{{ user.repName }}</span>
       </div>
     </div>
   
     <!-- Chat Box for Selected User -->
     <div class="chat-box" *ngIf="selectedUser">
-      <h3>{{ selectedUser.name }}</h3>
+      <h3>{{ selectedUser.repName }}</h3>
       <ng-container *ngFor="let message of messagesArr">
-      <div class="chat-messages" *ngIf="selectedUser.id==message.reciepientID">
+      <div class="chat-messages" *ngIf="selectedUser.repID==message.reciepientID || selectedUser.repID== message.userid">
         <div  class="message" [ngClass]="message.userid==user._id?'user_chat_class':'not_user_chat'">      
           <p >{{ message.msg }}</p>    
         </div>
@@ -43,3 +47,19 @@
         </div>
     </div>
 </div>
+<ng-template #chatDialogTemplate>
+  <div class="modal_newchat">
+  <h2>Select a User to Chat</h2>
+<div class="new_chat">
+  <ng-select
+  [(ngModel)]="newSelectedUser"
+  [items]="newUsers"
+  bindLabel="Name"
+  bindValue="_id"
+  [searchable]="true">
+</ng-select>
+</div>
+
+  <button mat-button (click)="confirmSelection()">Start Chat</button>
+</div>
+</ng-template>

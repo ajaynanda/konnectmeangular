@@ -19,8 +19,8 @@
                   </div>       
             <mat-card class="suggetionCard" *ngFor="let img of suggestionArray;let i=index" ngxSlickItem>
                 <a routerLink="/user/myprofile/{{img._id}}">
-                <img *ngIf="img.Profilepic!=null" src="{{img.profilePic}}" alt="pic" class="imageCard">
-                <img *ngIf="img.Profilepic==null"
+                <img *ngIf="img.profilePic!=null" src="{{img.profilePic}}" alt="pic" class="imageCard">
+                <img *ngIf="img.profilePic==null"
                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                     alt="no image" class="imageCard">
                 <span class="spanCard">{{img.Name | titlecase}}</span>

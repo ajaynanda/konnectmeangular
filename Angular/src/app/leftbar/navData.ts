@@ -1,14 +1,14 @@
 export const navData=[
     {
-        routerLink:'user/dashboard',
+        routerLink:'/user/dashboard',
         icon:'bi bi-house-fill',
         label:'Home'
     },
-    {
-        routerLink:'user/dashboard/',
-        icon:'bi bi-rss-fill',
-        label:'Feed'
-    },
+    // {
+    //     routerLink:'user/dashboard/',
+    //     icon:'bi bi-rss-fill',
+    //     label:'Feed'
+    // },
     {
         routerLink:'/user/myprofile/'+JSON.parse(localStorage.getItem('KMuser') || '{}')._id,
         icon:'bi bi-person-fill',
@@ -19,21 +19,21 @@ export const navData=[
         icon:'bi bi-chat-fill',
         label:'Chat'
     },
-    {
-        routerLink:'/user/groups',
-        icon:'bi bi-people-fill',
-        label:'Groups'
-    },
-    {
-        routerLink:'/user/events',
-        icon:'bi bi-calendar3-event',
-        label:'Events'
-    },
-    {
-        routerLink:'/user/invite',
-        icon:'bi bi-bank2',
-        label:'Invite Friends'
-    },
+    // {
+    //     routerLink:'/user/groups',
+    //     icon:'bi bi-people-fill',
+    //     label:'Groups'
+    // },
+    // {
+    //     routerLink:'/user/events',
+    //     icon:'bi bi-calendar3-event',
+    //     label:'Events'
+    // },
+    // {
+    //     routerLink:'/user/invite',
+    //     icon:'bi bi-bank2',
+    //     label:'Invite Friends'
+    // },
 ]
 export const navProfileData=[
     {

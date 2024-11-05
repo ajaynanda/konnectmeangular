@@ -56,7 +56,8 @@ import { MatMenuModule } from '@angular/material/menu';
    MatSnackBarModule,
 MatIconModule,
 SlickCarouselModule,
-MatMenuModule
+MatMenuModule,
+
    
   ],
 

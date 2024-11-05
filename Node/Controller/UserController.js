@@ -3,7 +3,9 @@ const bcrypt = require('bcrypt')
 const jwt =require('jsonwebtoken')
 const otpdb=require('../Model/otp')
 require("dotenv").config()
+
 const Emailsend=require('../Middlewares/emailsend')
+const messagedb = require('../Model/messages')
 const Alluser = ((req,res) => {
     return new Promise((resolve, reject) => {
         Userdb.find().then((result) => {
@@ -381,4 +383,108 @@ const removeFollower=((req,res)=>{
          
     })
 })
-module.exports = { Alluser, userRegister,userLogin,getuserbyid,updateUserById,verifytoken,Deleteuser,ChangePassword,userLogout,otpverification,forgotPassword,otpsend,userfollow,userunfollow,removeFollower}
+const chatList=((req,res)=>{
+    return new Promise(async(resolve,reject)=>{
+        try{
+        const allUsers = await Userdb.find();
+        const userdata = await Userdb.findById(req.params.userid)
+        const filteredUsers =await allUsers.filter(user => user._id.toString() !== userdata._id.toString());
+        const chatListIds =await userdata.chatList.map(chat => chat.repID.toString());
+        const finalUserList =await filteredUsers.filter(user => !chatListIds.includes(user._id.toString()));
+        console.log(finalUserList,"userid");
+        
+        resolve(finalUserList)
+        }catch(error){
+            reject({success:false,message:'cannot get chat list',err:'error'})
+        }
+    })
+})
+const addNewChat=((req,res)=>{
+    return new Promise(async(resolve,reject)=>{
+        try{
+        const user = await Userdb.findById(req.params.userid)
+        const rep=await Userdb.findById(req.params.repid)
+        let random=Math.floor(Math.random() * 100000)
+        const newMessage= await new messagedb({
+            chatID: random, // or use a more robust ID generation strategy
+            chatData: [], // Empty chatData array for initial state
+            repData: {
+              repName: `${rep.Firstname} ${rep.Lastname}`, // Default or fetched name
+              repID: rep.userid,
+              repProfilePic: rep?.Profilepic, // Placeholder image URL or fetched URL
+            },
+            userData: {
+              Name: `${user.Firstname} ${user.Lastname}`, // Default or fetched name
+              userid: user.userid,
+              profilePic: user.Profilepic, // Placeholder image URL or fetched URL
+            }
+        })
+        const savedMessage = await newMessage.save();
+        console.log(savedMessage,"asave");
+        
+        const chatEntry = {
+            Name: savedMessage.userData.Name,
+            _id: savedMessage._id,
+            userid:savedMessage.userData.userid, // Using the saved message's ID as chat ID reference
+            profilePic: savedMessage.userData.profilePic,
+            lasttext: '', // Initialize as empty or populate as required
+            isSeen: false, // Initialize as false for new chat
+            chatID: savedMessage._id,
+            repID: savedMessage.repData.repID,
+            repName: savedMessage.repData.repName,
+            repProfilePic: savedMessage.repData.repProfilePic
+          };
+          const chatRepEntry = {
+            Name: savedMessage.repData.repName,
+            _id: savedMessage._id, // Using the saved message's ID as chat ID reference
+            userid:savedMessage.repData.repID,
+            profilePic: savedMessage.repData.profilePic,
+            lasttext: '', // Initialize as empty or populate as required
+            isSeen: false, // Initialize as false for new chat
+            chatID: savedMessage._id,
+            repID: savedMessage.userData.userid,
+            repName: savedMessage.userData.Name,
+            repProfilePic: savedMessage.userData.profilePic
+          };
+      await  user.updateOne({$push:{chatList:chatEntry}})
+      await rep.updateOne({$push:{chatList:chatRepEntry}})
+      resolve(savedMessage)
+        }catch(err){
+            reject({success:false,message:'Cannot add new chat',err:err})
+        }
+    })
+})
+const sendMessage=((req,res)=>{
+    return new Promise(async(resolve,reject)=>{
+        try{
+ 
+        const chat=await messagedb.findById(req.params.chatid)
+        console.log(req.body.messagedBy,"messages");
+        let data={
+            userid:req.body.userid,
+            reciepientID:req.body.reciepientID,
+            msg:req.body.msg,
+            messagedBy:JSON.parse(req.body.messagedBy),
+            messageTime:req.body.messageTime,
+            isSeen:req.body.isSeen
+        }
+       await chat.updateOne({$push:{chatData:data}})
+    // const chat =await messagedb.updateOne({_id:req.params.chatid},{$push:{chatData:data}})
+        resolve(chat)
+        }catch(error){
+            reject({success:false,message:'cannot add message',err:error})
+        }
+    })
+})
+const messageChatHistory=((req,res)=>{
+    return new Promise((resolve,reject)=>{
+        try{
+            const chat = messagedb.findById(req.params.chatid)
+            resolve(chat)
+        }catch(error){
+            reject({success:false,message:'cannot get chat history',err:error})
+        }
+       
+    })
+})
+module.exports = { Alluser, userRegister,userLogin,getuserbyid,updateUserById,verifytoken,Deleteuser,ChangePassword,userLogout,otpverification,forgotPassword,otpsend,userfollow,userunfollow,removeFollower,addNewChat,chatList,sendMessage,messageChatHistory}

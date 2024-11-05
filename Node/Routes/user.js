@@ -1,6 +1,7 @@
 const router=require('express').Router()
 const Controller=require('../Controller/UserController')
-
+const multer = require('multer');
+const upload = multer();
 router.get('/alluser',((req,res)=>{
     Controller.Alluser(req,res).then((result)=>{
         res.status(200).json(result)
@@ -149,5 +150,36 @@ router.delete('/removefollower/:userid/:followerid',((req,res)=>{
         res.status(400).json(err)
     })
 }))
-
+router.post('/addnewchat/:userid/:repid',((req,res)=>{
+    Controller.addNewChat(req,res).then((result)=>{
+        res.status(200).json({Success:true,message:"New chat added",data:result})
+    }).catch(err=>{
+        console.log(err)
+        res.status(400).json(err)
+    })
+}))
+router.get('/chatlist/:userid',((req,res)=>{
+    Controller.chatList(req,res).then((result)=>{
+        res.status(200).json({Success:true,message:"New chat added",data:result})
+    }).catch(err=>{
+        console.log(err)
+        res.status(400).json(err)
+    })
+}))
+router.post('/sendmessage/:chatid',upload.none(),((req,res)=>{
+    Controller.sendMessage(req,res).then((result)=>{
+        res.status(200).json({Success:true,message:"New message send",data:result})
+    }).catch(err=>{
+        console.log(err)
+        res.status(400).json(err)
+    })
+}))
+router.get('/messagechathistory/:chatid',((req,res)=>{
+    Controller.messageChatHistory(req,res).then((result)=>{
+        res.status(200).json({Success:true,message:"New chat added",data:result})
+    }).catch(err=>{
+        console.log(err)
+        res.status(400).json(err)
+    })
+}))
 module.exports=router

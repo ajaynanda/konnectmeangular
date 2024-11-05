@@ -17,6 +17,8 @@ export class SharebarComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  
   submit(data: NgForm) {
     const id = JSON.parse(localStorage.getItem('KMuser') || '{}')._id
     const formdata = new FormData
@@ -30,6 +32,7 @@ export class SharebarComponent implements OnInit {
       this.imagePreviewSrc = ''
       this.videoPreview=''
       this.isVideoSelected=false
+
     })
   }
   onFileChange(event: any) {
