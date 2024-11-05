@@ -9,8 +9,10 @@
        <div class="col-md-5">
         <div class="rowright">
         <form [formGroup]="registerForm" (ngSubmit)="register()">
-            <label>Name</label>
-            <input type="text" placeholder="Enter Name" formControlName="name" name="name" class="form-control">
+            <label>First Name</label>
+            <input type="text" placeholder="Enter First Name" formControlName="fname" name="fname" class="form-control">
+            <label>Last Name</label>
+            <input type="text" placeholder="Enter Last Name" formControlName="lname" name="lname" class="form-control">
             <label>Email</label>
             <input type="email" name="email" placeholder="Enter Email" formControlName="email" class="form-control">
             <span style="color: red;" *ngIf="controls['email'].getError('required')!=null && controls['email'].touched">Enter Email</span>

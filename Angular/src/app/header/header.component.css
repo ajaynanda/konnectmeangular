@@ -1,28 +1,36 @@
-nav{
+.navbar{
     display: flex;
+    width: 100%;
+    margin-bottom: 0px;
 }
 li{
     padding: 5px;
 }
 a{
-    padding: 25px;
-    margin: 15px 15px;
+    padding: 5px;
     text-decoration: none;
-    color:darkred;
+    color:whitesmoke;
     font-size: large;
     font-weight: bold;
 }
 .menubar{
-  margin-left: auto;
-  margin-right: 45px;
+  margin-left:46rem;
+}
+.menubar .navbar-nav{
+    margin-left: auto;
+    margin-right: 30px;
+}
+.fa-bars{
+    color: white;
+    border: none;
 }
 .navbar-brand{
     font-size: 35px;
-    color:darkred;
+    color:#ffffff;
 }
 .navbar-brand:hover{  
-    color:darkblue;
+    color:#cdcdcd;
 }
 a:hover{
-    color:darkblue;
+    color:#3c3cbb;
 }

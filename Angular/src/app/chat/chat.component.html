@@ -1,0 +1,45 @@
+<div class="container-fluid text-center">
+    <div class="row">
+        <div class="col-md-2">
+            <app-leftbar></app-leftbar> 
+        </div>
+        <div class="col-md-10">
+       
+<div class="chat-container">
+    <!-- Sidebar for Users -->
+    <div class="user-sidebar">
+      <div class="search-bar">
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          placeholder="Search users..."
+          (input)="filterUsers($event)"
+        />
+        <button (click)="startNewChat()">New Chat</button>
+      </div>
+      <div *ngFor="let user of users" class="user-item" (click)="selectUser(user)">
+        <img [src]="user.profileImage" alt="Profile Image" class="profile-image" />
+        <span>{{ user.name }}</span>
+      </div>
+    </div>
+  
+    <!-- Chat Box for Selected User -->
+    <div class="chat-box" *ngIf="selectedUser">
+      <h3>{{ selectedUser.name }}</h3>
+      <ng-container *ngFor="let message of messagesArr">
+      <div class="chat-messages" *ngIf="selectedUser.id==message.reciepientID">
+        <div  class="message" [ngClass]="message.userid==user._id?'user_chat_class':'not_user_chat'">      
+          <p >{{ message.msg }}</p>    
+        </div>
+      </div>
+    </ng-container>
+      <!-- Input Section -->
+      <div class="input-section">
+        <input type="text" [(ngModel)]="newMessage" placeholder="Type your message..." />
+        <button (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+        </div>
+    </div>
+</div>

@@ -179,7 +179,7 @@ const adminotpsend=((req,res)=>{
             }
             else{
                 const otp=Math.floor(Math.random()*90000) + 100000;
-                console.log(otp);
+                console.log(otp,"admin otp");
                 Emailsend(req,otp)
                 const data=new otpdb({
                     userid:user.Adminid,

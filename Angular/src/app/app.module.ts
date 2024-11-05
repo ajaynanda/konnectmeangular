@@ -16,6 +16,16 @@ import { MembershipComponent } from './membership/membership.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
+import { CommonModule } from '@angular/common';
+import { ChangePasswordComponent } from './userProfile/change-password/change-password.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { PasswordComponent } from './password/password.component';
+import { ForgotpasswordComponent } from './password/forgotpassword/forgotpassword.component';
+import { OtpverifyComponent } from './password/otpverify/otpverify.component';
+import {MatIconModule} from '@angular/material/icon';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,16 +37,29 @@ import { TokenInterceptor } from './token.interceptor';
     TermsComponent,
     PolicyComponent,
     MembershipComponent,
+    
+    ChangePasswordComponent,
+          PasswordComponent,
+          ForgotpasswordComponent,
+          OtpverifyComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule,
     NgbModule, 
     NgImageSliderModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+   MatSnackBarModule,
+MatIconModule,
+SlickCarouselModule,
+MatMenuModule
+   
   ],
+
   providers: [{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })

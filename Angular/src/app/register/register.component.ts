@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-register',
@@ -8,9 +9,10 @@ import { AuthService } from '../auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private fb:FormBuilder, private service:AuthService) { }
+  constructor(private fb:FormBuilder, private service:AuthService,private _Router:Router) { }
   registerForm=this.fb.group({
-    name:new FormControl('',[Validators.required]),
+    fname:new FormControl('',Validators.required),
+    lname:new FormControl('',[Validators.required]),
     email:new FormControl('',[Validators.required,Validators.email]),
     password:new FormControl('',[Validators.required,Validators.minLength(6)]),
     cpassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
@@ -22,9 +24,12 @@ export class RegisterComponent implements OnInit {
   }
 register(){
 console.log(this.registerForm.value);
-this.service.Register(this.registerForm.value).subscribe((result)=>{
+this.service.Register(this.registerForm.value).subscribe((result:any)=>{
   console.log(result);
-  
+  if(result.Success) this._Router.navigate(['/login'])
+  else{
+    console.log("errro")
+  }
 })
 }
 mustmatch(password:any,cpassword:any){

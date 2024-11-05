@@ -1,58 +1,17 @@
-<div class="container-fluid">
-    <div class="sidebar">
-        <div class="sidebartop">
-        <div class="row">
-        <div class="user">
-            <img src="../../assets/media.jpg" alt="profileimage" width="150px" height="150px" >
-            <h6>Name</h6>
-        </div>
-        </div>
-        <hr>
-        <div class="menubar">
-            <div class="row " >
-                
-                <li><a routerLink="/user/profile"><i  class="bi bi-person-circle"></i>My Profile</a></li>
-            </div>
-            <div class="row">
-                <li><a routerLink="/user/activity"><i class="bi bi-ethernet"></i>KonnectMe</a></li>
-            </div>
-            <div class="row">
-                <li><a routerLink="/user/freinds"><i class="bi bi-people-fill"></i>Friends</a></li>
-            </div>
-            <div class="row">
-                <li><a routerLink="/user/settings"><i class="bi bi-chat-fill"></i>Chats</a></li>
-            </div>
-            <div class="row">
-                <li><a routerLink="/user/settings"><i class="bi bi-gear-fill"></i>Settings</a></li>
-            </div>
-        </div>
+<div class="container">
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed':''" *ngIf="!profile"> 
+    <div class="logo-container">
+        <span class="logo bi bi-list" (click)="collapsed=!collapsed"></span>  
+        <div class="logo-text" *ngIf="collapsed">KonnectMe</div>
     </div>
-    </div>
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navdata">
+            <a class="sidenav-nav-link" [routerLink]="data.routerLink" >
+                <i class="sidenav-link-icon" [class]="data.icon"></i>
+                <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+            </a>
+        </li>
+    </ul>
 </div>
-<div class="container-fluid" *ngIf="profile"> 
-    <div class="sidebar">
-        <div class="sidebartop">
-        <div class="row">
-        <div class="user">
-            <img src="" alt="profileimage" width="50px" height="50px" style="border-radius:50%;">
-            <h6>Name</h6>
-        </div>
-        </div>
-        <hr>
-        <div class="menubar">
-            <div class="row">
-                <li><a routerLink="/user/profile">Feeds</a></li>
-            </div>
-            <div class="row">
-                <li><a routerLink="/user/activity">Edit Details</a></li>
-            </div>
-            <div class="row">
-                <li><a routerLink="/user/freinds">Change Password</a></li>
-            </div>
-            <div class="row">
-                <li><a routerLink="/user/settings">Delete My Account</a></li>
-            </div>
-        </div>
-    </div>
-    </div>
+
 </div>

@@ -46,10 +46,11 @@ const userRegister = ((req, res) => {
     })
 })
 const userLogin=((req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     return new Promise((resolve, reject) => {
         
         Userdb.findOne({ Email: req.body.email }).then((user) => {
+           console.log(user);
            
             if (!user) {
                 return reject({ Error: true, Message: "Email incorrect" })
@@ -85,13 +86,74 @@ const userLogin=((req, res) => {
     })
 })
 const getuserbyid=((req, res) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
         const id = req.params.id
         console.log(id);
-        Userdb.findById(id).then((user) => {
+        const allUsers=await Userdb.find()
+        const currentUser = await Userdb.findById(req.params.id).populate('Friends Followers Followings');
+        Userdb.findById(id).then(async(user) => {
+            const commonFriends =await user.Followers.filter(follower =>
+                user.Followings.some(following => following._id === follower._id))
+                .map(follower => ({
+                Firstname: follower.Firstname,
+                Lastname: follower.Lastname,
+                Name: follower.Name,
+                _id: follower._id,
+                Profilepic: follower.Profilepic,
+                dob: follower.dob, 
+            }));
+            console.log(commonFriends,"cf");
+            
+            // Step 3: Add new common friends and remove those not in the common list
+            if(commonFriends.length>0){    
+                // await Userdb.findByIdAndUpdate(req.params.id, {
+                //     $addToSet: { Friends: { $each: commonFriends } }
+                // });
+                await Userdb.findByIdAndUpdate(req.params.id, {
+                    Friends: commonFriends
+                });
+            }
+            const suggestionArray = await allUsers.filter(user => {
+                return (
+                    String(user._id) !== String(req.params.id) && // Exclude the current user
+                    (currentUser.Friends || []).every(friend => {
+                        return String(friend._id) !== String(user._id); // Compare IDs as strings
+                    })
+                );
+            });
+            const suggestionsWithText =await suggestionArray.map(user => {
+                const isFollower = (currentUser.Followers || []).some(follower => {
+                    return String(follower._id) === String(user._id); // Compare IDs as strings
+                });
+                
+                const isFollowing = (currentUser.Followings || []).some(following => {
+                    return String(following._id) === String(user._id); // Compare IDs as strings
+                });
+        
+                let text;
+                if (isFollower && !isFollowing) {
+                    text = "Follow back";
+                } else if (isFollowing && !isFollower) {
+                    text = "Unfollow";
+                } else {
+                    text = "Follow";
+                }
+        
+                return {
+                    _id: user._id,
+                    profilePic:user?.Profilepic,
+                    Name: `${user.Firstname} ${user.Lastname}`,
+                    text: text
+                };
+            });
+            if(suggestionsWithText.length>0){                
+                await Userdb.findByIdAndUpdate(req.params.id, {
+                    userSuggestion: suggestionsWithText
+                });
+            }
             return resolve(user)
         }).catch((err) => {
-            return reject({ Error: true, Message: "User not found with the id " + id })
+            return reject({ Error: true, Message: "User not found with the id " + id,err:err })
         })
     })
 })
@@ -101,15 +163,20 @@ const updateUserById = ((req, res) => {
         const user = ({
             Firstname: req.body.fname,
             Lastname: req.body.lname,
-            Email: req.body.email,
             City: req.body.city,
-            Aboutme: req.body.about,
+            Aboutme: req.body.description,
             Relation: req.body.relation,
             DateofBirth:req.body.dob
         })
+        // console.log(user)
         Userdb.findByIdAndUpdate(id, user).then((users) => {
-            req.name = users.Firstname
-            return resolve(users)
+            console.log(users,"node userbyid updates");
+            Userdb.findById(id).then((data)=>{
+                console.log(data,"mono");
+                res.name = data.Firstname
+                return resolve(data)
+            })
+           
         }).catch(err => {
             return reject({ Error: true, Message: "User not found with the id " + id,err:err })
         })
@@ -140,6 +207,7 @@ const ChangePassword = (async (req, res, next) => {
     return new Promise((resolve, reject) => {
         const id = req.params.id
         Userdb.findById(id).then(async (user) => {
+            console.log(req.body.opassword)
             const comparepassword = await bcrypt.compare(req.body.opassword, user.Password)
             if (!comparepassword) {
                 return reject({
@@ -181,11 +249,11 @@ const otpsend=((req,res)=>{
     return new Promise((resolve,reject)=>{
         Userdb.findOne({Email:req.body.email}).then((user)=>{
             if(!user){
-                reject({Success:false,message:'Email is invalid'})
+                reject({Success:false,message:'Email is not Registered,Try Again'})
             }
             else{
                 const otp=Math.floor(Math.random()*90000) + 100000;
-                console.log(otp);
+                console.log(otp,"otp send user ");
                 Emailsend(req,otp)
                 const data=new otpdb({
                     userid:user.userid,
@@ -236,33 +304,81 @@ const forgotPassword=((req,res)=>{
 })
 const userfollow=((req,res)=>{
     return new Promise(async(resolve,reject)=>{
-        const cuser=await Userdb.findOne({userid:req.body.userid})
+        const cuser=await Userdb.findOne({userid:req.params.userid})
         const user=await Userdb.findOne({_id:req.params.id})
-        console.log(cuser);
-        console.log(user);
-        if(!user.Followers.includes(req.body.userid)){
-            await user.updateOne({$push:{Followers:req.body.userid}})
-            await cuser.updateOne({$push:{Followings:req.params.id}})
-            resolve(user)
+        console.log(cuser,"cuser");
+        console.log(user,'user');
+        const includes=user.Followers.some((item)=>item._id===req.params.userid)
+        console.log(includes,"ok")
+        if(!includes){
+            await user.updateOne({$push:{Followers:{
+                Firstname:cuser.Firstname,
+                Lastname:cuser.Lastname,
+                Name:`${cuser.Firstname} ${cuser.Lastname}`,
+                _id:cuser.userid,
+                dob:cuser.DateofBirth,
+                Profilepic:cuser.Profilepic
+             }}})
+            await cuser.updateOne({$push:{Followings:{
+                Firstname:user.Firstname,
+                Lastname:user.Lastname,
+                Name:`${user.Firstname} ${user.Lastname}`,
+                _id:user.userid,
+                dob:user.DateofBirth,
+                Profilepic:user.Profilepic
+             }}})
+        resolve(cuser)
         } else{
-            reject({Sucess:false,message:'You are aready following this user'})
+            reject({Sucess:false,message:'You are already following this user'})
         }
         
     })
 })
 const userunfollow=((req,res)=>{
     return new Promise(async(resolve,reject)=>{
-        const cuser=await Userdb.findOne({userid:req.body.userid})
+        const cuser=await Userdb.findOne({userid:req.params.userid})
         const user=await Userdb.findOne({_id:req.params.id})
         console.log(cuser);
         console.log(user);
-        if(user.Followers.includes(req.body.userid)){
-            await user.updateOne({$pull:{Followers:req.body.userid}})
-            await cuser.updateOne({$pull:{Followings:req.params.id}})
-            resolve(user)
+        const includes=user.Followers.some((item)=>item._id===req.params.userid)
+        console.log(includes,"ok")
+        if(includes){
+            await user.updateOne({$pull:{Followers:{
+                Firstname:cuser.Firstname,
+                Lastname:cuser.Lastname,
+                Name:`${cuser.Firstname} ${cuser.Lastname}`,
+                _id:cuser._id,
+                dob:cuser.DateofBirth,
+                Profilepic:cuser.Profilepic
+             }}})
+            await cuser.updateOne({$pull:{Followings:{
+                Firstname:user.Firstname,
+                Lastname:user.Lastname,
+                Name:`${user.Firstname} ${user.Lastname}`,
+                _id:user._id,
+                dob:user.DateofBirth,
+                Profilepic:user.Profilepic
+             }}})
+          await  resolve(cuser)
         } else{
             reject({Sucess:false,message:'You are already unfollowing this user'})
         }
     })
 })
-module.exports = { Alluser, userRegister,userLogin,getuserbyid,updateUserById,verifytoken,Deleteuser,ChangePassword,userLogout,otpverification,forgotPassword,otpsend,userfollow,userunfollow}
+const removeFollower=((req,res)=>{
+    return new Promise(async(resolve,reject)=>{
+        const user=await Userdb.findOne({_id:req.params.userid})
+        const fuser=await Userdb.findOne({_id:req.params.followerid})
+        console.log(user);
+        const includes=user.Followers.some((item)=>item._id===req.params.followerid)
+        if(includes){
+            await user.updateOne({$pull:{Followers:{_id:req.params.followerid}}})
+            await fuser.updateOne({$pull:{Followings:{_id:req.params.userid}}})
+            resolve(user)     
+        }else{
+            reject({success:false,message:'Cannot remove user'})
+        }
+         
+    })
+})
+module.exports = { Alluser, userRegister,userLogin,getuserbyid,updateUserById,verifytoken,Deleteuser,ChangePassword,userLogout,otpverification,forgotPassword,otpsend,userfollow,userunfollow,removeFollower}

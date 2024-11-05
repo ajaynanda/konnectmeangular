@@ -1,0 +1,57 @@
+<div class="container">
+    
+    <h4 class="rightbarTitle">User information</h4>
+    <div class="rightbarInfo">
+        <div class="rightbarInfoItem">
+          <span class="rightbarInfoKey">City:</span>
+          <span class="rightbarInfoValue">{{userdata?.City}}</span>
+        </div>
+        <div class="rightbarInfoItem">
+          <span class="rightbarInfoKey">Current City:</span>
+          <span class="rightbarInfoValue">{{userdata?.City}}</span>
+        </div>
+        <div class="rightbarInfoItem">
+            <span class="rightbarInfoKey">Date of Birth:</span>
+            <span class="rightbarInfoValue">{{userdata?.DateofBirth | date}}</span>
+          </div>
+        <div class="rightbarInfoItem">
+          <span class="rightbarInfoKey">Relationship:</span>
+          <span class="rightbarInfoValue">{{userdata?.Relation}}</span>
+        </div>
+      </div>
+      <h4 class="rightbarTitle">Friends</h4>
+      <div class="rightbarFollowings">
+        <div class="rightbarFollowing" *ngFor="let frnds of frnd">
+       <a [routerLink]='["/user/myprofile/",frnds._id]'> <img
+            src="{{frnds?.Profilepic?frnds?.Profilepic:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}}"
+            alt=""
+            class="rightbarFollowingImg"
+            width="50px"
+            height="50px"
+            
+          /> 
+
+          <span class="rightbarFollowingName">{{frnds?.Name | titlecase}}</span></a> 
+        </div>
+
+<hr>
+<br>
+
+</div>
+<div class="peopleFollow">
+  <h4>Followings</h4>
+  </div>
+<div class="rightbarFollowings">
+  <div class="rightbarFollowing" *ngFor="let following of followList">
+ <a routerLink="/user/myprofile/{{following._id}}"> <img
+      src="{{following.Profilepic?following.Profilepic:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}}"
+      alt=""
+      class="rightbarFollowingImg"
+      width="50px"
+      height="50px"   
+    /> 
+    <span class="rightbarFollowingName">{{following.Name | titlecase}}</span></a> 
+  </div>
+  </div>
+</div>
+

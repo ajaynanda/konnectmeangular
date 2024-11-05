@@ -6,17 +6,35 @@ import { SharebarComponent } from '../sharebar/sharebar.component';
 import { PostbarComponent } from '../postbar/postbar.component';
 import { LeftbarComponent } from '../leftbar/leftbar.component';
 import { RightbarComponent } from '../rightbar/rightbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// import { NgImageSliderModule } from 'ng-image-slider';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
+import {MatIconModule} from '@angular/material/icon';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import {MatMenuModule} from '@angular/material/menu'
+import { ChatComponent } from '../chat/chat.component';
 @NgModule({
   declarations: [
     UserComponent,
     SharebarComponent,
     LeftbarComponent,
     RightbarComponent,
-    PostbarComponent
+    PostbarComponent,
+    ChatComponent
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
-  ]
+    FormsModule,
+    MatDialogModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    SlickCarouselModule,
+    MatMenuModule
+  ],
+
 })
 export class UserModule { }

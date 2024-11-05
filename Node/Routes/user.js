@@ -1,5 +1,4 @@
 const router=require('express').Router()
-const { resolveContent } = require('nodemailer/lib/shared')
 const Controller=require('../Controller/UserController')
 
 router.get('/alluser',((req,res)=>{
@@ -32,7 +31,7 @@ router.post('/userlogin',((req,res)=>{
     })
 }))
 router.get('/userbyid/:id',((req,res)=>{
-    Controller.verifytoken(req,res).then(()=>{
+ 
     Controller.getuserbyid(req,res).then((result)=>{
         res.status(200).json({
             Success:true,
@@ -43,14 +42,11 @@ router.get('/userbyid/:id',((req,res)=>{
         console.log(err);
         res.status(400).json(err)
     })
-}).catch(err=>{
-    res.status(401).json(err)
-})
 }))
 router.put('/updateuserbyid/:id',((req,res)=>{
-    Controller.verifytoken(req,res).then(()=>{
+  
     Controller.updateUserById(req,res).then((result)=>{
-        console.log(result);
+        console.log(result,"upated");
         res.status(200).json({
             Success:true,
             message:"Update the document",
@@ -60,9 +56,7 @@ router.put('/updateuserbyid/:id',((req,res)=>{
         res.status(400).json({Success:false,message:'Error',err:err})
     })
 
-}).catch(err=>{
-    res.status(401).json(err)
-})
+
 }))
 router.delete('/deleteuserbyid/:id',((req,res)=>{
     Controller.verifytoken(req,res).then(()=>{
@@ -88,16 +82,24 @@ router.get('/userlogout',((req,res)=>{
         res.status(401).json(err)
     })
 }))
-router.get('/Changepassword/:id',((req,res)=>{
-    Controller.verifytoken(req,res).then(()=>{
+// router.get('/Changepassword/:id',((req,res)=>{
+//     Controller.verifytoken(req,res).then(()=>{
+//     Controller.ChangePassword(req,res).then((result)=>{
+//         res.status(200).json({Success:true,message:'Password Changed Sucessfully'})
+//     }).catch(err=>{
+//         res.status(401).json(err)
+//     })
+// }).catch(err=>{
+//     res.status(401).json(err)
+// })
+// }))
+router.post('/Changepassword/:id',((req,res)=>{
+   
     Controller.ChangePassword(req,res).then((result)=>{
         res.status(200).json({Success:true,message:'Password Changed Sucessfully'})
     }).catch(err=>{
         res.status(401).json(err)
     })
-}).catch(err=>{
-    res.status(401).json(err)
-})
 }))
 router.get('/forgotpassword',((req,res)=>{
   
@@ -115,24 +117,33 @@ router.get('/otpverify',((req,res)=>{
         res.status(401).json(err)
     })
 }))
-router.get('/otpsend',((req,res)=>{
+router.post('/otpsend',((req,res)=>{
     Controller.otpsend(req,res).then((result)=>{
         res.status(200).json({Success:true,message:'Email has been sent sucessfully',data:result})
     }).catch(err=>{
         res.status(401).json(err)
     })
 }))
-router.get('/userfollow/:id',((req,res)=>{
+router.get('/userfollow/:userid/:id',((req,res)=>{
     Controller.userfollow(req,res).then((result)=>{
+        console.log(result,"resulted");
         res.status(200).json({Success:true,message:"user has been followed",data:result})
     }).catch(err=>{
         console.log(err)
         res.status(400).json(err)
     })
 }))
-router.get('/userunfollow/:id',((req,res)=>{
+router.get('/userunfollow/:userid/:id',((req,res)=>{
     Controller.userunfollow(req,res).then((result)=>{
         res.status(200).json({Success:true,message:"user has been unfollowed",data:result})
+    }).catch(err=>{
+        console.log(err)
+        res.status(400).json(err)
+    })
+}))
+router.delete('/removefollower/:userid/:followerid',((req,res)=>{
+    Controller.removeFollower(req,res).then((result)=>{
+        res.status(200).json({Success:true,message:"user has been removed",data:result})
     }).catch(err=>{
         console.log(err)
         res.status(400).json(err)

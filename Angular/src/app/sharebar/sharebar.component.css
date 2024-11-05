@@ -20,7 +20,7 @@
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .shareInput {
@@ -46,35 +46,50 @@
 
 .shareOptions {
     display: flex;
-    margin-left: 20px;
+    margin-left: 0px;
 }
 
 .shareOption {
     display: flex;
     align-items: center;
-    margin-right: 15px;
     cursor: pointer;
+    margin-left:50px ;
 }
 
 .shareIcon {
     font-size: 18px;
-    margin-right: 3px;
+    margin-right: 2px;
 }
 
 .shareOptionText {
     font-size: 15px;
     font-weight: 500;
     padding: 5px;
-    margin-left: 35px;
 }
-
+.imagePreviewContainer{
+    padding: 0 20px 10px 20px;
+   position: relative;
+}
+.imgPreview{
+    width: 100%;
+  object-fit: cover;
+}
+.imgCancel{
+    position: absolute;
+    top: -5;
+    right: 5px;
+    cursor: pointer;
+    opacity: 0.8;
+    border-radius: 50%;
+}
 .shareButton {
+
+    background-color: rgb(16, 124, 16);
     border: none;
-    padding: 7px;
     border-radius: 5px;
-    background-color: green;
+    padding: 6px;
+    margin-right: 20px;
     font-weight: 500;
-    margin-left: 50px;
     cursor: pointer;
     color: white;
 }

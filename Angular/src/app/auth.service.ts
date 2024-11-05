@@ -16,4 +16,7 @@ export class AuthService {
   Register(data:any){
    return  this.http.post(`${environment.Register}`,data)
   }
+  forgotPassword(email:any){
+    return this.http.post(`${environment.forgotPassword}`,email)
+  }
 }

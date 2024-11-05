@@ -14,18 +14,36 @@ const UserSchema=new mongoose.Schema({
         default:false
     },
     DateofBirth:{
-        type:Date,
-        default:''
+        type:String,
+        
     },
     Password:{
         type:String
     },
-    Followers:{
-        type:Array
-    },
-    Followings:{
-        type:Array
-    },
+    Followers:[{
+       Firstname:String,
+       Lastname:String,
+       Name:String,
+       _id:String,
+       Profilepic:String,
+       dob:String
+    }],
+    Followings:[{
+        Firstname:String,
+        Lastname:String,
+        Name:String,
+        _id:String,
+        Profilepic:String,
+        dob:String
+    }],
+    Friends:[{
+        Firstname:String,
+        Lastname:String,
+        Name:String,
+        _id:String,
+        Profilepic:String,
+        dob:String
+    }],
     Aboutme:{
         type:String,
         default:undefined
@@ -46,7 +64,13 @@ const UserSchema=new mongoose.Schema({
     },
     userid:{
         type:String
-    }
+    },
+    userSuggestion:[{
+        Name:String,
+        _id:String,
+        profilePic:String,
+        text:String
+    }]
 },{timestamps:true})
 const Userdb=mongoose.model('user',UserSchema)
 module.exports = Userdb
