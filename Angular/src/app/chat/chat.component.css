@@ -122,14 +122,14 @@
   }
   .user_chat_class{
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     justify-content: flex-start;
     margin-left: 10px;
     margin-right: auto;
   }
   .not_user_chat{
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     justify-content: flex-end;
     margin-right: 10px;
     margin-left: auto;

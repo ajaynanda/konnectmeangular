@@ -98,8 +98,8 @@
   }
   .commentUserInfo{
       display: flex;
-      align-items: start;
-      justify-content: start;
+      align-items: flex-start;
+      justify-content: flex-start;
       margin-left: 10px;
   }
   .postCommentProfileImg{
@@ -116,8 +116,8 @@
   }
  .commentText{
   display: flex;
-  align-items: start;
-  justify-content:start;
+  align-items: flex-start;
+  justify-content:flex-start;
   margin-left: 10px;
  }
  .commentText textarea{
@@ -142,8 +142,8 @@
 }
 .commentHead{
   display: flex;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .nameComment{
   padding: 3px;
