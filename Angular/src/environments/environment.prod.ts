@@ -21,5 +21,9 @@ export const environment = {
   addreply:'comment/addreply',
   editReply:'comment/editreply',
   deleteReply:'comment/deletereply',
-  removeFollower:'removefollower'
+  removeFollower:'removefollower',
+  newChat:'addnewchat',
+  chatlist:'chatlist',
+  sendMessage:'sendmessage',
+  chathistory:'messagechathistory'
 };
