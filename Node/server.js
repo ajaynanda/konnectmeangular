@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
   });
 app.use(morgan('tiny'))
 app.use(cors({
-  origin: ["http://localhost:4200", "https://konnectmeapi.onrender.com"],
+  origin: ["http://localhost:4200", "https://konnectmeapi.onrender.com","http://konnectsme.s3-website-us-east-1.amazonaws.com"],
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: "Content-Type,Authorization"
