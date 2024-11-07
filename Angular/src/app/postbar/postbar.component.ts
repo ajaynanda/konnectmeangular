@@ -57,16 +57,14 @@ feedPost:any
         return false
       } 
     }) 
-     console.log(lk,"lk");
-    console.log(elID,"elId")
       return elID
     });
   }
 liked(index:number,post:any){
-  console.log(post,"post")
+  // console.log(post,"post")
  this.index=index
  this.postservice.like(this.userid,post).subscribe((res:any)=>{
-  console.log(res,"resk");
+  // console.log(res,"resk");
   if (res.data.Success) {
     console.log(res.data.Success)
     this.likes=true
@@ -137,7 +135,7 @@ comment(index:any,post:any){
   console.log(this.commentData,"dat com")
  }
  editComment(postid:any,comment: any,edit:any) {
-   console.log("Editing comment:", edit.value);
+  //  console.log("Editing comment:", edit.value);
    this.postservice.editComment(postid,comment,{comment:edit.value}).subscribe((res)=>{
     console.log(res);
     this.editComments=false
@@ -155,9 +153,9 @@ comment(index:any,post:any){
   this.editIndex=null
  }
  deleteComment(postid:any,comment: any) {
-   console.log("Deleting comment:", comment);
+  //  console.log("Deleting comment:", comment);
    this.postservice.deleteComment(postid,comment._id).subscribe((res)=>{
-    console.log(res,"deketed");
+    // console.log(res,"deketed");
     this.commentData=null
     this.dropdownIndex=null
     this.editComments=false
@@ -170,7 +168,7 @@ comment(index:any,post:any){
 
  editReplyComment(repid:any,commentid:any,edits:any){
   this.postservice.editReplyComment(this.postData._id,commentid,repid,{comment:edits.value}).subscribe((res)=>{
-    console.log(res,"response edioits"); 
+    // console.log(res,"response edioits"); 
     this.feedPosts()
     this.editReplyComments=false
     this.replyData=null
@@ -184,7 +182,7 @@ openReplyComment(post:any,comment:any,index:any){
   this.addReplys=true
 }
 addReply(postid:number,commentid:number,edits:any){
-  console.log(edits.value,"values")
+  // console.log(edits.value,"values")
   this.dropdownIndex=null
   const user = JSON.parse(localStorage.getItem('KMuser') || '{}');
   let data={
@@ -219,7 +217,7 @@ openEditReplyComment(post:any,comment:any,rep:any,index:any){
 }
 deleteReplyComment(postid:any,commentid:any,rep: any){
   this.postservice.deleteReplyComment(postid,commentid,rep._id).subscribe((result)=>{
-      console.log(result,"result");
+      // console.log(result,"result");
       this.editReplyComments=true
       this.replyData=null
       this.dropdownReplyIndex=null

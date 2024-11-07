@@ -17,14 +17,17 @@
         />
         <button (click)="startNewChat()">New Chat</button>
       </div>
-      <div *ngFor="let user of users" class="user-item" (click)="selectUser(user)">
-        
+    <ng-container *ngFor="let user of users">
+      <div [ngClass]="selectedUser?._id==user?._id?'active':''" class="user-item" (click)="selectUser(user)">       
         <img *ngIf="user.repProfilePic!=null" src="{{user.repProfilePic}}" alt="Profile Image" class="profile-image">
         <img *ngIf="user.repProfilePic==null"
             src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             alt="no image" class="profile-image">
         <span>{{ user.repName }}</span>
       </div>
+    </ng-container >
+      <!-- </div> -->
+
     </div>
   
     <!-- Chat Box for Selected User -->

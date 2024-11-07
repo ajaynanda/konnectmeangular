@@ -149,5 +149,8 @@
     font-size: larger;
     font-family: 'Poppins';
   }
+  .active{
+    background-color: #a9bbcf;
+  }
 
   
